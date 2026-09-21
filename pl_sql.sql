@@ -68,11 +68,11 @@ BEGIN
 		signal sqlstate "45000"
         set message_text = 'branch should not be empty';
     end if;
-<<<<<<< HEAD
+
     if p_branch not in('CHENNAI', 'MUMBAI', 'PUNE') then
-=======
+
     if not exists(select 1 from employee where branch = p_branch) then
->>>>>>> e28787f2bde5e43c2fc788be99ba76e509549fa1
+
 		signal sqlstate "45000" ## we r telling the db , that i signal you to throw a exception here
         set message_text = 'invalid input , PLEASE enter valid branch';
     end if;
@@ -83,10 +83,8 @@ $$
 
 drop procedure update_branch_by_id;
 call update_branch_by_id('1', 'NEW YORK');
-<<<<<<< HEAD
-=======
+
  SELECT * FROM employee;
->>>>>>> e28787f2bde5e43c2fc788be99ba76e509549fa1
 
 -- CAP to return the count of the employee in each department
 DELIMITER $$
@@ -119,6 +117,3 @@ if condition then end if to use exceptions
 <<<<<<< HEAD
 */
 
-=======
-*/
->>>>>>> e28787f2bde5e43c2fc788be99ba76e509549fa1
