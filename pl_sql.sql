@@ -80,3 +80,33 @@ $$
 drop procedure update_branch_by_id;
 call update_branch_by_id('1', 'NEW YORK');
  SELECT * FROM employee;
+
+-- CAP to return the count of the employee in each department
+DELIMITER $$
+CREATE PROCEDURE count_emp_by_dept(IN p_dept varchar(255) , OUT p_ctn int)
+BEGIN
+	if p_dept = '' then
+		signal sqlstate "45000" ## we r telling the db , that i signal you to throw a exception here
+        set message_text = 'department name should not be empty';
+	end if;
+    if not exists (select 1 from employee where department = p_dept) then
+		signal sqlstate "45000" ## we r telling the db , that i signal you to throw a exception here
+        set message_text = 'invalid input for the procedure';
+    end if;
+    -- sql
+	SELECT count(id) INTO p_ctn from employee where department= p_dept;
+END
+$$
+
+call count_emp_by_dept('ADMIN' , @count_emp); ## session variaable @
+
+SELECT @count_emp;
+
+/*
+select using procedures
+DELIMITER $$
+IN param
+OUT param
+@ session variable and INTO
+if condition then end if to use exceptions
+*/
