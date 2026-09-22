@@ -3,11 +3,7 @@ package com.dao;
 import com.model.Employee;
 import com.utility.DBConnectoin;
 
-import javax.xml.transform.Result;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,5 +53,22 @@ public class CustomerDao {
 
         dbConnectoin.DBClose();
         return emp_names;
+    }
+
+    public int getEmpCountByDept(String dept) throws SQLException {
+       Connection conn = dbConnectoin.dbConnect();
+
+        String sql ="{call count_emp_by_dept(?,?)}" ;
+        //prepare callable statement
+        CallableStatement cs = conn.prepareCall(sql);
+        cs.setString(1, dept);
+        //register output parameter
+        cs.registerOutParameter(2 , Types.INTEGER);
+        //execute the callable statement
+        cs.execute();
+        //store the output parameter value in a variable
+        int count = cs.getInt(2);
+        dbConnectoin.DBClose();
+        return count;
     }
 }
