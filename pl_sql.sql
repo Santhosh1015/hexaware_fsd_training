@@ -138,6 +138,55 @@ where id = 1;
 
 drop view v_emp_dev;
 
+-- Triggers case study : Ecom project
 
+create table product(
+ id int primary key auto_increment,
+ title varchar(255),
+ price double,
+ stock_qty int
+);
 
+create table orders
+(
+	order_id int primary key auto_increment,
+    product_id int,
+    order_qty int,
+    foreign key (product_id) references product(id)
+);
+INSERT INTO product (title, price, stock_qty) VALUES ('Some headphones', 540, 3);
+INSERT INTO product (title, price, stock_qty) VALUES ('Some laptop', 45540, 1);
 
+DELIMITER $$
+CREATE TRIGGER trg_chech_stock_qty
+BEFORE INSERT ON orders
+FOR EACH ROW
+BEGIN
+	declare v_stock_qty int;
+    if not exists(select 1 from product where id = new.product_id) then
+		signal sqlstate "45000"
+        set message_text = "product id invalid";
+	end if;
+    
+	select stock_qty into v_stock_qty
+    from product
+    where id = NEW.product_id;
+    
+    if v_stock_qty < new.order_qty then
+		signal sqlstate "45000"
+        set message_text = "Stock not available";
+	end if;
+END
+$$
+DELIMITER $$
+CREATE TRIGGER trg_update_stock_qty
+AFTER INSERT ON orders
+FOR EACH ROW
+BEGIN
+	update product
+    set stock_qty = stock_qty - new.order_qty
+    where id = new.product_id;
+END
+$$
+ insert into orders (product_id , order_qty) values (1 , 3);
+select * from orders;
