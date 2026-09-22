@@ -3,6 +3,7 @@ package com.service;
 import com.dao.CustomerDao;
 import com.model.Employee;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class CustomerService {
@@ -13,4 +14,7 @@ public class CustomerService {
         return customerDao.getAllEmployees();
     }
 
+    public List<String> getEmployeeNamesByDept(String dept) throws SQLException {
+        return customerDao.getEmployeeNamesByDept(dept);
+    }
 }

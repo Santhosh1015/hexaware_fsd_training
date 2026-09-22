@@ -3,6 +3,7 @@ package com.dao;
 import com.model.Employee;
 import com.utility.DBConnectoin;
 
+import javax.xml.transform.Result;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -39,5 +40,22 @@ public class CustomerDao {
         dbConnectoin.DBClose();
         return list;
 
+    }
+
+    public List<String> getEmployeeNamesByDept(String dept) throws SQLException {
+
+        List<String> emp_names = new ArrayList<>();
+        Connection conn = dbConnectoin.dbConnect();
+        String sql = "{CALL emp_by_department(?)}";
+        CallableStatement callableStatement = conn.prepareCall(sql);
+        callableStatement.setString(1 , dept);
+        ResultSet rs = callableStatement.executeQuery();
+        while(rs.next()){
+            String emp_name = rs.getString("name");
+            emp_names.add(emp_name);
+        }
+
+        dbConnectoin.DBClose();
+        return emp_names;
     }
 }

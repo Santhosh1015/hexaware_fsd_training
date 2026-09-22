@@ -7,6 +7,14 @@ public class Employee {
     private String city;
     private String department;
 
+    public Employee(int id, String name, String department, String city, String branch) {
+        this.id = id;
+        this.name = name;
+        this.department = department;
+        this.city = city;
+        this.branch = branch;
+    }
+
     public Employee(){
 
     }

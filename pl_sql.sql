@@ -28,7 +28,7 @@ $$
 -- CAP to fetch employee names baseed on given department
 
 DELIMITER $$
-CREATE PROCEDURE emp_by_branch(IN p_dept varchar(255))
+CREATE PROCEDURE emp_by_department(IN p_dept varchar(255))
 BEGIN
 	if p_dept = '' then
 		signal sqlstate "45000" ## we r telling the db , that i signal you to throw a exception here
@@ -45,10 +45,10 @@ $$
 DROP procedure emp_by_branch;
 
 CALL all_emp;
-CALL emp_by_branch('FINANCE');
-CALL emp_by_branch('ADMIN');
-CALL emp_by_branch('');
-CALL emp_by_branch('HR');
+CALL emp_by_department('FINANCE');
+CALL emp_by_department('ADMIN');
+CALL emp_by_department('');
+CALL emp_by_department('HR');
 
 -- CAP to update the branch of the employee based on the id
 DELIMITER $$
@@ -70,9 +70,6 @@ BEGIN
     end if;
 
     if p_branch not in('CHENNAI', 'MUMBAI', 'PUNE') then
-
-    if not exists(select 1 from employee where branch = p_branch) then
-
 		signal sqlstate "45000" ## we r telling the db , that i signal you to throw a exception here
         set message_text = 'invalid input , PLEASE enter valid branch';
     end if;
@@ -114,6 +111,5 @@ IN param
 OUT param
 @ session variable and INTO
 if condition then end if to use exceptions
-<<<<<<< HEAD
 */
 
