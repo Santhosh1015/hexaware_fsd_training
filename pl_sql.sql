@@ -113,3 +113,31 @@ OUT param
 if condition then end if to use exceptions
 */
 
+## views(hide attributes / coloumns / rows)
+create view v_emp as
+select id , name , branch , department
+from employee
+where department not in ('ADMIN');
+
+SELECT * FROM v_emp_dev;
+SELECT * FROM employee;
+
+SHOW TABLES;
+
+create view v_emp_dev as
+select *
+from employee
+where department = 'DEV'
+WITH CHECK OPTION; 
+-- WITH CHECK OPTION blocks any INSERT/UPDATE via this view that
+-- would result in a row no longer matching department = 'DEV'
+
+update v_emp-dev
+set department = 'FINANCE'
+where id = 1;
+
+drop view v_emp_dev;
+
+
+
+
