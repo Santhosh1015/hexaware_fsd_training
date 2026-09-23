@@ -11,22 +11,22 @@ public class Employee {
     private Branch branch;
     private String city;
     private Department department;
+    private Double salary;
     private LocalDate joiningDate;
 
 
     public Employee() {
     }
 
-    public Employee(int id, String name, Branch branch, String city, Department department, LocalDate joiningDate) {
+    public Employee(int id, String name, Branch branch, String city, Department department, LocalDate joiningDate, Double salary) {
         this.id = id;
         this.name = name;
         this.branch = branch;
         this.city = city;
         this.department = department;
+        this.salary = salary;
         this.joiningDate = joiningDate;
     }
-
-
 
     public int getId() {
         return id;
@@ -38,6 +38,14 @@ public class Employee {
 
     public String getName() {
         return name;
+    }
+
+    public Double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
     }
 
     public void setName(String name) {
@@ -84,6 +92,7 @@ public class Employee {
                 ", branch=" + branch +
                 ", city='" + city + '\'' +
                 ", department=" + department +
+                ", salary=" + salary +
                 ", joiningDate=" + joiningDate +
                 '}';
     }
