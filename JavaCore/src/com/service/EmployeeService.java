@@ -1,6 +1,7 @@
 package com.service;
 
 import com.dao.EmployeeDAO;
+import com.dto.EmpDeptStatDTO;
 import com.dto.EmployeeRespDTO;
 import com.enums.Branch;
 import com.enums.Department;
@@ -71,9 +72,15 @@ public class EmployeeService {
                     .collect(Collectors.toList());
     }
 
-    public Map<Department, Long> getEmpCountByDept(List<Employee> employees) {
+    public List<EmpDeptStatDTO> getEmpCountByDept(List<Employee> employees) {
         return employees
                 .stream()
-                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .map(entry ->
+                        new EmpDeptStatDTO(entry.getKey() , entry.getValue()))
+                .toList();
+
     }
 }

@@ -1,5 +1,6 @@
 package com.main;
 
+import com.dto.EmpDeptStatDTO;
 import com.dto.EmployeeRespDTO;
 import com.enums.Branch;
 import com.enums.Department;
@@ -36,7 +37,7 @@ public class Main {
 //        empInfo.forEach(System.out :: println);
 
         System.out.println("----------Get the Count of Employee Based On Departments----------");
-        Map<Department , Long> map = employeeService.getEmpCountByDept(employees);
-        System.out.println(map);
+        List<EmpDeptStatDTO> list = employeeService.getEmpCountByDept(employees);
+        list.forEach(System.out::println);
     }
 }
