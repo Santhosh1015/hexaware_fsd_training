@@ -5,7 +5,7 @@ import com.enums.Department;
 
 import java.time.LocalDate;
 
-public record EmployeeReqDTO(
+public record EmployeeRespDTO(
         int id,
         String name,
         Branch branch,

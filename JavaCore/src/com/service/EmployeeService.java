@@ -1,7 +1,7 @@
 package com.service;
 
 import com.dao.EmployeeDAO;
-import com.dto.EmployeeReqDTO;
+import com.dto.EmployeeRespDTO;
 import com.enums.Branch;
 import com.enums.Department;
 import com.enums.SortDirection;
@@ -9,8 +9,8 @@ import com.mapper.EmployeeMapper;
 import com.model.Employee;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class EmployeeService {
     EmployeeDAO employeeDAO = new EmployeeDAO();
@@ -63,11 +63,17 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public List<EmployeeReqDTO> getAllEmployeesInfo(List<Employee> employees) {
+    public List<EmployeeRespDTO> getAllEmployeesInfo(List<Employee> employees) {
         EmployeeMapper eM= new EmployeeMapper();
             return employees
                     .stream()
                     .map(  eM::empToDTO)
                     .collect(Collectors.toList());
+    }
+
+    public Map<Department, Long> getEmpCountByDept(List<Employee> employees) {
+        return employees
+                .stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment, Collectors.counting()));
     }
 }

@@ -1,14 +1,14 @@
 package com.main;
 
-import com.dto.EmployeeReqDTO;
+import com.dto.EmployeeRespDTO;
 import com.enums.Branch;
 import com.enums.Department;
-import com.enums.SortDirection;
 import com.model.Employee;
 import com.service.EmployeeService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -22,17 +22,21 @@ public class Main {
 //        List<Employee> sortedEmp = new ArrayList<>();
 //        sortedEmp = employeeService.sortEmpBySalary(employees , SortDirection.ASE);
 //        employees.forEach(System.out :: println);
-        System.out.println("----------filter Employees By Department----------");
-        List<Employee> filterEmpByDeptList = new ArrayList<>();
-        filterEmpByDeptList = employeeService.filterEmployeeByDept(employees , Department.DEV);
-        filterEmpByDeptList.forEach(System.out :: println);
+//        System.out.println("----------filter Employees By Department----------");
+//        List<Employee> filterEmpByDeptList = new ArrayList<>();
+//        filterEmpByDeptList = employeeService.filterEmployeeByDept(employees , Department.DEV);
+//        filterEmpByDeptList.forEach(System.out :: println);
+//
+//        System.out.println("----------filter Employees By Branch, sorted by Joining Date----------");
+//        List<Employee> filterEmpByBranchList = employeeService.filterAndSortEmployeeByBranch(employees, Branch.CHENNAI);
+//        filterEmpByBranchList.forEach(System.out::println);
+//
+//        System.out.println("----------Get the Employee Info using DTO----------");
+//        List<EmployeeRespDTO> empInfo  = employeeService.getAllEmployeesInfo(employees);
+//        empInfo.forEach(System.out :: println);
 
-        System.out.println("----------filter Employees By Branch, sorted by Joining Date----------");
-        List<Employee> filterEmpByBranchList = employeeService.filterAndSortEmployeeByBranch(employees, Branch.CHENNAI);
-        filterEmpByBranchList.forEach(System.out::println);
-
-        System.out.println("----------Get the Employee Info using DTO----------");
-        List<EmployeeReqDTO> empInfo  = employeeService.getAllEmployeesInfo(employees);
-        empInfo.forEach(System.out :: println);
+        System.out.println("----------Get the Count of Employee Based On Departments----------");
+        Map<Department , Long> map = employeeService.getEmpCountByDept(employees);
+        System.out.println(map);
     }
 }

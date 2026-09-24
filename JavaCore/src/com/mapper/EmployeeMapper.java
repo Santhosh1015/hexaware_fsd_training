@@ -1,11 +1,11 @@
 package com.mapper;
 
-import com.dto.EmployeeReqDTO;
+import com.dto.EmployeeRespDTO;
 import com.model.Employee;
 
 public class EmployeeMapper {
-    public EmployeeReqDTO empToDTO(Employee employee){
-        return new EmployeeReqDTO(
+    public EmployeeRespDTO empToDTO(Employee employee){
+        return new EmployeeRespDTO(
                 employee.getId(),
                 employee.getName(),
                 employee.getBranch(),
