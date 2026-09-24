@@ -1,6 +1,7 @@
 package com.service;
 
 import com.dao.EmployeeDAO;
+import com.dto.EmpBranchStatDTO;
 import com.dto.EmpDeptStatDTO;
 import com.dto.EmployeeRespDTO;
 import com.enums.Branch;
@@ -9,6 +10,7 @@ import com.enums.SortDirection;
 import com.mapper.EmployeeMapper;
 import com.model.Employee;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,7 +18,11 @@ import java.util.stream.Collectors;
 public class EmployeeService {
     EmployeeDAO employeeDAO = new EmployeeDAO();
     public List<Employee> getAllEmployees() {
-        return employeeDAO.getAllEmployees();
+        List<Employee> list = employeeDAO.getAllEmployees(); // unsorted list of objects
+        Collections.sort(list);
+        return list;
+
+
     }
 
     public  List<Employee> sortEmpBySalary(List<Employee> employees, SortDirection sortDirection) {
@@ -82,5 +88,22 @@ public class EmployeeService {
                         new EmpDeptStatDTO(entry.getKey() , entry.getValue()))
                 .toList();
 
+    }
+
+    public List<EmpBranchStatDTO> getTotalSalaryByBranch(List<Employee> employees) {
+        return
+                employees
+                        .stream()
+                        .collect(Collectors.groupingBy(Employee :: getBranch , Collectors.summingDouble(Employee::getSalary)))
+                        .entrySet()
+                        .stream()
+                        .map(entry->
+                                new EmpBranchStatDTO(entry.getKey() , entry.getValue()))
+                        .collect(Collectors.toList());
+    }
+
+    public double getTotalSalary(List<EmpBranchStatDTO> list) {
+        return list
+                .stream().mapToDouble(EmpBranchStatDTO::salary).sum();
     }
 }

@@ -5,7 +5,7 @@ import com.enums.Department;
 
 import java.time.LocalDate;
 
-public class Employee {
+public class Employee implements Comparable<Employee>{
     private int id;
     private String name;
     private Branch branch;
@@ -95,5 +95,10 @@ public class Employee {
                 ", salary=" + salary +
                 ", joiningDate=" + joiningDate +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Employee e2) {
+        return e2.getJoiningDate().compareTo(this.getJoiningDate());
     }
 }

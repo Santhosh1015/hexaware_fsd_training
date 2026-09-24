@@ -1,5 +1,6 @@
 package com.main;
 
+import com.dto.EmpBranchStatDTO;
 import com.dto.EmpDeptStatDTO;
 import com.dto.EmployeeRespDTO;
 import com.enums.Branch;
@@ -18,7 +19,7 @@ public class Main {
         List<Employee> employees = new ArrayList<>();
         EmployeeService employeeService = new EmployeeService();
         employees = employeeService.getAllEmployees();
-//        employees.forEach(System.out :: println);
+        employees.forEach(System.out :: println);
 //        System.out.println("----------Sort Employees By their Salary----------");
 //        List<Employee> sortedEmp = new ArrayList<>();
 //        sortedEmp = employeeService.sortEmpBySalary(employees , SortDirection.ASE);
@@ -36,8 +37,19 @@ public class Main {
 //        List<EmployeeRespDTO> empInfo  = employeeService.getAllEmployeesInfo(employees);
 //        empInfo.forEach(System.out :: println);
 
-        System.out.println("----------Get the Count of Employee Based On Departments----------");
-        List<EmpDeptStatDTO> list = employeeService.getEmpCountByDept(employees);
-        list.forEach(System.out::println);
+//        System.out.println("----------Get the Count of Employee Based On Departments----------");
+//        List<EmpDeptStatDTO> list = employeeService.getEmpCountByDept(employees);
+//        list.forEach(System.out::println);
+
+        // Compute the total salary of employees for each branch
+//        System.out.println("---------total salary of Employee Based On branch----------");
+//        List<EmpBranchStatDTO> list = employeeService.getTotalSalaryByBranch(employees);
+//        list.forEach(System.out::println);
+//
+//        System.out.println("---------Get Total Salary----------");
+//        double totSalary = employeeService.getTotalSalary(list);
+//        System.out.println("Total Salary: "+totSalary);
+
+
     }
 }
