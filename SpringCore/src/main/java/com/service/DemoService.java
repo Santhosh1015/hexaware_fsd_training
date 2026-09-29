@@ -35,32 +35,41 @@ public class DemoService {
 
     // 3- autowired using setter
 
-    private DemoDAO dao;
+//    private DemoDAO dao;
+//
+//    private DemoMapper mapper;
+//
+//    private DemoUtility utility;
+//
+//    @Autowired
+//    public void setDao(DemoDAO dao) {
+//        this.dao = dao;
+//    }
+//
+//    @Autowired
+//    public void setMapper(DemoMapper mapper) {
+//        this.mapper = mapper;
+//    }
+//
+//    @Autowired
+//    public void setUtility(DemoUtility utility) {
+//        this.utility = utility;
+//    }
 
-    private DemoMapper mapper;
+//    public void test(){
+//        System.out.println("In service using autowired setter...");
+//        dao.test();
+//        mapper.test();
+//        utility.test();
+//
+//    }
 
-    private DemoUtility utility;
+    // Dependencies Injection using method........
 
-    @Autowired
-    public void setDao(DemoDAO dao) {
-        this.dao = dao;
-    }
-
-    @Autowired
-    public void setMapper(DemoMapper mapper) {
-        this.mapper = mapper;
-    }
-
-    @Autowired
-    public void setUtility(DemoUtility utility) {
-        this.utility = utility;
-    }
-
-    public void test(){
-        System.out.println("In service...");
+    public void test(DemoDAO dao ,DemoMapper mapper , DemoUtility utility ){
+        System.out.println("In service using method injection...");
         dao.test();
         mapper.test();
         utility.test();
-
     }
 }
