@@ -20,6 +20,7 @@ public class User {
         this.isActive = isActive;
     }
 
+
     public int getId() {
         return id;
     }

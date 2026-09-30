@@ -3,6 +3,7 @@ package com.helpdesk.model;
 import com.helpdesk.enums.Priority;
 import com.helpdesk.enums.Status;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Ticket {
@@ -26,6 +27,14 @@ public class Ticket {
         this.priority = priority;
         this.status = status;
         this.customer = customer;
+    }
+
+    public Ticket(int id, String subject, LocalDate createdAt, Priority priority, Status status) {
+        this.id = id;
+        this.subject = subject;
+        this.createdAt = createdAt;
+        this.priority = priority;
+        this.status = status;
     }
 
     public int getId() {
