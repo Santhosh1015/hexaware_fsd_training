@@ -14,14 +14,19 @@ public class Customer {
 
     private String city;
 
+    @OneToOne
+    private User user;
+
     public Customer() {
     }
 
-    public Customer(int id, String city, String name) {
+    public Customer(int id, String name, User user, String city) {
         this.id = id;
-        this.city = city;
         this.name = name;
+        this.user = user;
+        this.city = city;
     }
+
 
     public int getId() {
         return id;
@@ -45,6 +50,14 @@ public class Customer {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

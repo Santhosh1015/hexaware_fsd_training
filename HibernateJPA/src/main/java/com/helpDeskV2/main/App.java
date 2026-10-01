@@ -15,7 +15,7 @@ public class App {
         CustomerService customerService = context.getBean(CustomerService.class);
 //        customerService.insert("Harry Potter" , "NewYork");
 
-        List<Customer> list = customerService.getAllCustomers();
-        list.forEach(System.out:: println);
+//        List<Customer> list = customerService.getAllCustomers();
+//        list.forEach(System.out:: println);
     }
 }
