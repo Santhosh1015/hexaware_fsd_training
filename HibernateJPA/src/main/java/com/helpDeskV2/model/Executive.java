@@ -17,16 +17,23 @@ public class Executive {
     @Enumerated(EnumType.STRING)
     private JobTitle jobTitle;
 
+    @ManyToOne
+    @JoinColumn(name = "manager_id" , nullable = false)
+    private Manager manager;
+
     @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Executive() {
     }
 
-    public Executive(int id, String name, JobTitle jobTitle, User user) {
+
+    public Executive(int id, String name, JobTitle jobTitle, Manager manager, User user) {
         this.id = id;
         this.name = name;
         this.jobTitle = jobTitle;
+        this.manager = manager;
         this.user = user;
     }
 
@@ -60,5 +67,13 @@ public class Executive {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 }

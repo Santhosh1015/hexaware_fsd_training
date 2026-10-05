@@ -12,6 +12,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
@@ -56,7 +57,7 @@ public class AppConfig {
     @Bean
     public PlatformTransactionManager getTransactionManager(){
 //        return new JpaTransactionManager(getEntityFactory().getNativeEntityManagerFactory()) // this is the system inbuilt entityManager
-        return new JpaTransactionManager(getEntityFactory().getObject()); // this is our own-configured class
+        return new JpaTransactionManager(Objects.requireNonNull(getEntityFactory().getObject())); // this is our own-configured class
 
     }
 }

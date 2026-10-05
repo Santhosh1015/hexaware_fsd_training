@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CustomerRepository {
@@ -24,6 +25,7 @@ public class CustomerRepository {
         String hql = "from Customer c"; // HQL for hibernate
         String sql = "select * from customer"; // this won't work cause it work with Entity Classes not with DB tables
 
+
         return entityManager.createQuery(jpql ,Customer.class).getResultList(); // it will going to return he
 
 //        return entityManager.createQuery(hql , Customer.class).getResultList(); // hql using createQuery
@@ -32,5 +34,10 @@ public class CustomerRepository {
         // to use List<?>
 
 
+    }
+
+
+    public Optional<Customer> getCustomerById(int customerId) {
+        return Optional.ofNullable(entityManager.find(Customer.class, customerId));
     }
 }

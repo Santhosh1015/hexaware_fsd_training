@@ -19,20 +19,32 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+
     @Column(name = "created_at")
     @CreationTimestamp
     private Instant createdAt;
 
+    @Column(name = "is_active" , nullable = false)
+    private boolean isActive=true;
+
     public User() {
     }
 
-    public User(int id, String username, String password, Role role, Instant createdAt) {
+    public User(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(int id, String username, String password, Role role, Instant createdAt , boolean isActive) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
         this.createdAt = createdAt;
+        this.isActive = isActive;
     }
+
 
     public int getId() {
         return id;
@@ -83,5 +95,13 @@ public class User {
                 ", role=" + role +
                 ", createdAt=" + createdAt +
                 '}';
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

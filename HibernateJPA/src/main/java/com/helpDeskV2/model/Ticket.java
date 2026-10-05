@@ -40,6 +40,13 @@ public class Ticket {
     public Ticket() {
     }
 
+    public Ticket(String subject, String issue, Priority priority, Status status) {
+        this.subject = subject;
+        this.issue = issue;
+        this.priority = priority;
+        this.status = status;
+    }
+
     public Ticket(int id, String subject, String issue, Instant createdAt, Priority priority, Status status, Customer customer, Executive executive) {
         this.id = id;
         this.subject = subject;
