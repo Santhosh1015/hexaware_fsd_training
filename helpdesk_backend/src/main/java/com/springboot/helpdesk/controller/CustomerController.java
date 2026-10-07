@@ -10,11 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequiredArgsConstructor
+@RequiredArgsConstructor // this annotation for the creation constructors for the variable that need constructor
+                        //like for this public final CustomerService customerService;
 public class CustomerController {
 
     public final CustomerService customerService;
 
+    // requestMapping is the specialized annotation of GetMapping PostMapping etc..
+    //@RequestMapping is the general api for the model like @RequestMapping("/api/customer")
+    //the GetMapping("/add) the api actually was "/api/customer/add"
     @PostMapping("/api/customer/add")
     public Customer insertCustomer(@RequestBody Customer customer){
         return customerService.insertCustomer(customer);

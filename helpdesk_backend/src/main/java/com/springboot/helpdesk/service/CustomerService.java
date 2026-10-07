@@ -33,6 +33,7 @@ public class CustomerService {
     }
 
     public void deleteCustomerById(long id) {
+        getCustomerById(id);
         customerRepository.deleteById(id);
     }
 }
