@@ -1,6 +1,7 @@
 package com.springboot.helpdesk.service;
 
 import com.springboot.helpdesk.dto.request.TicketDto;
+import com.springboot.helpdesk.dto.response.TicketRespDto;
 import com.springboot.helpdesk.enums.TicketStatus;
 import com.springboot.helpdesk.exception.ResourceNotFoundException;
 import com.springboot.helpdesk.mapper.TicketMapper;
@@ -12,7 +13,11 @@ import com.springboot.helpdesk.repository.ExecutiveRepository;
 import com.springboot.helpdesk.repository.TicketRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -53,4 +58,11 @@ public class TicketService {
         // step 4. update the ticket
         ticketRepository.save(ticket);
     }
+
+    public List<TicketRespDto> getTicketByCustomerId(Long customerId,int page, int size) {
+
+        Pageable pageable = PageRequest.of(page , size);
+        return ticketRepository.getTicketByCustomerId(customerId, pageable);
+    }
+
 }

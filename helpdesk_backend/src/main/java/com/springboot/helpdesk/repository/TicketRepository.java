@@ -1,9 +1,24 @@
 package com.springboot.helpdesk.repository;
 
+import com.springboot.helpdesk.dto.response.TicketRespDto;
 import com.springboot.helpdesk.model.Ticket;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
+
+    @Query("""
+            select new com.springboot.helpdesk.dto.response.TicketRespDto(t.id,t.subject,t.createdAt,t.priority,t.ticketStatus,c.name,e.name,e.email)
+            from Ticket t
+            left join t.customer c
+            left join t.executive e
+            where c.id = ?1
+            """)
+    List<TicketRespDto> getTicketByCustomerId(Long customerId, Pageable pageable);
+
 }
