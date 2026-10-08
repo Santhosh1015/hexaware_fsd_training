@@ -1,5 +1,6 @@
 package com.springboot.helpdesk.repository;
 
+import com.springboot.helpdesk.dto.response.ExecutiveTicketInfoDto;
 import com.springboot.helpdesk.dto.response.TicketRespDto;
 import com.springboot.helpdesk.model.Ticket;
 import org.springframework.data.domain.Pageable;
@@ -31,4 +32,13 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             """)
     List<TicketRespDto> getTicketByCustomerUsername(String customerUsername, Pageable pageable);
 
+    @Query("""
+            select new com.springboot.helpdesk.dto.response.ExecutiveTicketInfoDto(t.id,e.id,e.name,t.subject,t.priority,t.ticketStatus,t.createdAt,c.id,c.name)
+            from Ticket t
+            join t.executive e
+            join t.customer c
+            join e.user u
+            where u.userName = ?1
+            """)
+    List<ExecutiveTicketInfoDto> getTicketsByExecutiveUsername(String username, Pageable pageable);
 }
