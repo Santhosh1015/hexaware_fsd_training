@@ -1,8 +1,10 @@
 package com.springboot.helpdesk.controller;
 
+import com.springboot.helpdesk.dto.request.CustomerDto;
 import com.springboot.helpdesk.exception.ResourceNotFoundException;
 import com.springboot.helpdesk.model.Customer;
 import com.springboot.helpdesk.service.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +22,8 @@ public class CustomerController {
     //@RequestMapping is the general api for the model like @RequestMapping("/api/customer")
     //the GetMapping("/add) the api actually was "/api/customer/add"
     @PostMapping("/api/customer/add")
-    public Customer insertCustomer(@RequestBody Customer customer){
-        return customerService.insertCustomer(customer);
+    public void insertCustomer(@Valid @RequestBody CustomerDto customerDto){
+        customerService.insertCustomer(customerDto);
     }
 
     @GetMapping("/api/customer/{id}")
