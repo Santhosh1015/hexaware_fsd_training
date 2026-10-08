@@ -59,6 +59,12 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
+    public List<TicketRespDto> getTicketByCustomerUsername(String customerUsername,int page, int size) {
+
+        Pageable pageable = PageRequest.of(page , size);
+        return ticketRepository.getTicketByCustomerUsername(customerUsername, pageable);
+    }
+
     public List<TicketRespDto> getTicketByCustomerId(Long customerId,int page, int size) {
 
         Pageable pageable = PageRequest.of(page , size);

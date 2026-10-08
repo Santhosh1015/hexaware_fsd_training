@@ -32,11 +32,23 @@ public class TicketController {
     }
 
     @GetMapping("/api/ticket/v1/{customerId}")
+    // this pai says it is mandatory to have the pagination here
     public List<TicketRespDto> getTicketByCustomerId(@PathVariable Long customerId,
                                                      @RequestParam("page") int page,
                                                      @RequestParam("size") int size)
     {
         return ticketService.getTicketByCustomerId(customerId,page , size);
+    }
+
+    @GetMapping("/api/ticket/v2")
+    // but here we can make pagination optional by giving default value
+    public List<TicketRespDto> getTicketByCustomerUsername(@RequestParam("username") String customerUsername,
+                                                     @RequestParam(name = "page",required = false, defaultValue = "0") Integer page,
+                                                     @RequestParam(name = "size" , required = false , defaultValue = "10") Integer size)
+
+
+    {
+        return ticketService.getTicketByCustomerUsername(customerUsername,page , size);
     }
 
 }

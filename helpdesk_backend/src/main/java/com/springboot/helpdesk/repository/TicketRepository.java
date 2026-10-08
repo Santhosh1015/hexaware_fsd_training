@@ -21,4 +21,14 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             """)
     List<TicketRespDto> getTicketByCustomerId(Long customerId, Pageable pageable);
 
+    @Query("""
+            select new com.springboot.helpdesk.dto.response.TicketRespDto(t.id,t.subject,t.createdAt,t.priority,t.ticketStatus,c.name,e.name,e.email)
+            from Ticket t
+            left join t.customer c
+            left join t.executive e
+            left join c.user u
+            where u.userName = ?1
+            """)
+    List<TicketRespDto> getTicketByCustomerUsername(String customerUsername, Pageable pageable);
+
 }
