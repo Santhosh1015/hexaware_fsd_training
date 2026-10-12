@@ -16,7 +16,7 @@ import java.util.Map;
 
 
 @RestControllerAdvice // it is a global handling of controllers in a project
-                    //especially for exception over controllers
+                    //especially for exception over all controllers
 public class GlobalExceptionHandler {
 
 
@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
 //                .badRequest()
 //                .body(e.getMessage());
         // spring.jackson only convert object into JSON
-        // so wee need an object that why we're creating DTO here
+        // so we need an object that why we're creating DTO here
 
         // 2. response with DTO
         return

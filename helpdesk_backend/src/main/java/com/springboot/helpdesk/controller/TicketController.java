@@ -2,7 +2,11 @@ package com.springboot.helpdesk.controller;
 
 import com.springboot.helpdesk.dto.request.TicketDto;
 import com.springboot.helpdesk.dto.response.ExecutiveTicketInfoDto;
+import com.springboot.helpdesk.dto.response.TicketResDto;
 import com.springboot.helpdesk.dto.response.TicketRespDto;
+import com.springboot.helpdesk.dto.response.TicketStatusCustomerCountDto;
+import com.springboot.helpdesk.enums.Priority;
+import com.springboot.helpdesk.enums.TicketStatus;
 import com.springboot.helpdesk.model.Ticket;
 import com.springboot.helpdesk.service.TicketService;
 import jakarta.validation.Valid;
@@ -10,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.Subject;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -55,6 +61,36 @@ public class TicketController {
                                                                       @RequestParam(name = "page",required = false, defaultValue = "0")Integer page,
                                                                       @RequestParam(name = "size" , required = false , defaultValue = "10")Integer size){
         return ticketService.getTicketsByExecutiveUsername(username , page, size);
+    }
+
+    @GetMapping("/api/ticketStatus/customer/stat/count")
+    public List<TicketStatusCustomerCountDto> getCustomerCountByTicketStat()
+    {
+        return ticketService.getCustomerCountByTicketStat();
+    }
+
+
+    @GetMapping("/api/ticket/by-priority")
+    public List<TicketResDto> getTicketByPriority(@RequestParam("priority")Priority priority){
+        return ticketService.getTicketByPriority(priority);
+    }
+
+    @GetMapping("/api/ticket/by-subject")
+    public List<TicketResDto> getTicketBySubject(@RequestParam("subject")String subject){
+        return ticketService.getTicketBySubject(subject);
+    }
+    @GetMapping("/api/ticket/by-status")
+    public List<TicketResDto> getTicketByStatus(@RequestParam("status")TicketStatus ticketStatus){
+        return ticketService.getTicketByStatus(ticketStatus);
+    }
+
+    @GetMapping("/api/ticket/filter")
+    public List<TicketResDto> dynamicFilterTicket(@RequestParam(name = "priority" , required = false) Priority priority,
+                                                  @RequestParam(name =  "status" , required = false) TicketStatus ticketStatus,
+                                                  @RequestParam(name =  "fromDate" , required = false)LocalDate fromDate,
+                                                  @RequestParam(name = "toDate" , required = false)LocalDate toDate
+                                                  ){
+        return ticketService.dynamicFilterTicket(priority, ticketStatus , fromDate , toDate);
     }
 
 }

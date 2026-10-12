@@ -2,7 +2,10 @@ package com.springboot.helpdesk.service;
 
 import com.springboot.helpdesk.dto.request.TicketDto;
 import com.springboot.helpdesk.dto.response.ExecutiveTicketInfoDto;
+import com.springboot.helpdesk.dto.response.TicketResDto;
 import com.springboot.helpdesk.dto.response.TicketRespDto;
+import com.springboot.helpdesk.dto.response.TicketStatusCustomerCountDto;
+import com.springboot.helpdesk.enums.Priority;
 import com.springboot.helpdesk.enums.TicketStatus;
 import com.springboot.helpdesk.exception.ResourceNotFoundException;
 import com.springboot.helpdesk.mapper.TicketMapper;
@@ -18,6 +21,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.Subject;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -76,5 +82,43 @@ public class TicketService {
 
         Pageable pageable =PageRequest.of(page , size);
         return ticketRepository.getTicketsByExecutiveUsername(username , pageable);
+    }
+
+    public List<TicketStatusCustomerCountDto> getCustomerCountByTicketStat() {
+        return ticketRepository.getCustomerCountByTicketStat();
+    }
+
+    public List<TicketResDto> getTicketByPriority(Priority priority) {
+        List<Ticket> list =  ticketRepository.findByPriority(priority);
+
+        return list
+                .stream()
+                .map(TicketMapper::convertEntityToDto)
+                .toList();
+    }
+
+    public List<TicketResDto> getTicketBySubject(String subject) {
+        List<Ticket> list =  ticketRepository.findBySubject(subject);
+
+        return list
+                .stream()
+                .map(TicketMapper::convertEntityToDto)
+                .toList();
+    }
+
+    public List<TicketResDto> getTicketByStatus(TicketStatus ticketStatus) {
+        List<Ticket> list =  ticketRepository.findByTicketStatus(ticketStatus);
+
+        return list
+                .stream()
+                .map(TicketMapper::convertEntityToDto)
+                .toList();
+    }
+
+    public List<TicketResDto> dynamicFilterTicket(Priority priority, TicketStatus ticketStatus, LocalDate fromDate, LocalDate toDate) {
+        return ticketRepository.dynamicFilterTicket(priority,
+                ticketStatus,
+                fromDate == null ? null: fromDate.atStartOfDay(ZoneOffset.UTC).toInstant(),
+                toDate == null? null:toDate.atStartOfDay(ZoneOffset.UTC).toInstant());
     }
 }

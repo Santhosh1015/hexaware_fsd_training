@@ -1,6 +1,7 @@
 package com.springboot.helpdesk.mapper;
 
 import com.springboot.helpdesk.dto.request.TicketDto;
+import com.springboot.helpdesk.dto.response.TicketResDto;
 import com.springboot.helpdesk.model.Ticket;
 import jakarta.validation.Valid;
 
@@ -13,5 +14,15 @@ public class TicketMapper {
         ticket.setSubject(ticketDto.subject());
 
         return ticket;
+    }
+    public static TicketResDto convertEntityToDto(Ticket ticket){
+        return
+                new TicketResDto (
+                        ticket.getId(),
+                        ticket.getSubject(),
+                        ticket.getCreatedAt(),
+                        ticket.getPriority(),
+                        ticket.getTicketStatus()
+                );
     }
 }
