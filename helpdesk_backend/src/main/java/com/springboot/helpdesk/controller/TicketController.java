@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.Subject;
+import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -25,16 +26,17 @@ public class TicketController {
 
     private final TicketService ticketService;
 
-    @PostMapping("/api/ticket/add/{customerId}")
+    @PostMapping("/api/ticket/add")
     public void insertTicket(@Valid  @RequestBody TicketDto ticketDto,
-                                       @PathVariable Long customerId){
-        ticketService.add(customerId , ticketDto);
+                             Principal principal){
+        ticketService.add(principal.getName(), ticketDto);
     }
 
     @PutMapping("/api/ticket/assign/{ticketId}/{executiveId}")
     public void assignExecutive(@PathVariable Long ticketId ,
-                                @PathVariable Long executiveId){
-        ticketService.assignExecutive(ticketId , executiveId);
+                                @PathVariable Long executiveId,
+                                Principal principal){
+        ticketService.assignExecutive(ticketId , executiveId , principal.getName());
 
     }
 

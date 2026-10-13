@@ -14,6 +14,7 @@ import com.springboot.helpdesk.repository.ExecutiveRepository;
 import com.springboot.helpdesk.repository.ManagerRepository;
 import com.springboot.helpdesk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +26,13 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final ExecutiveRepository executiveRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void insert(ManagerDto managerDto) {
         //step 1. prepare a user object
         User user = new User();
         user.setUserName(managerDto.userName());
-        user.setPassword(managerDto.password());
+        user.setPassword(passwordEncoder.encode(managerDto.password()));
         user.setRole(Role.MANAGER);
         user.setStatus(Status.ACTIVE);
 

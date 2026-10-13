@@ -13,7 +13,10 @@ import com.springboot.helpdesk.repository.ManagerRepository;
 import com.springboot.helpdesk.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 @Service
 @RequiredArgsConstructor
@@ -22,17 +25,23 @@ public class ExecutiveService {
     private final ExecutiveRepository executiveRepository;
     private final UserRepository userRepository;
     private final ManagerRepository managerRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public void insertExecutive(@Valid ExecutiveDto executiveDTO, Long managerId) {
+    public void insertExecutive(@Valid ExecutiveDto executiveDTO, String managerUserName) {
 
 
         //step 0. check Manager is in DB to create executive
-        Manager manager  = managerRepository.findById(managerId).orElseThrow(()-> new ResourceNotFoundException("ManagerId is invalid"));
+        Manager manager  = managerRepository.getByUserName(managerUserName);
+        if (manager == null) {
+            throw new RuntimeException(
+                    "Manager not found for username: " + managerUserName
+            );
+        }
         //filed for user is coming from DTO
         //step1. let the user go in DB first
         User user = new User();
         user.setUserName(executiveDTO.username());
-        user.setPassword(executiveDTO.password());
+        user.setPassword(passwordEncoder.encode(executiveDTO.password()));
         user.setRole(Role.EXECUTIVE);
         user.setStatus(Status.ACTIVE);
         user = userRepository.save(user);

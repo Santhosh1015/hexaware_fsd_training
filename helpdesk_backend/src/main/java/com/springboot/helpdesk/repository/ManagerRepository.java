@@ -18,4 +18,13 @@ public interface ManagerRepository extends JpaRepository<Manager, Long> {
             group by e.jobTitle
             """)
     List<JobTitleExecutiveCountDto> getExecutiveCountByJobTitleStat();
+
+
+    @Query("""
+            select m
+            from Manager m
+            join m.user u
+            where u.userName = ?1
+            """)
+    Manager getByUserName(String managerUserName);
 }

@@ -11,6 +11,7 @@ import com.springboot.helpdesk.repository.CustomerRepository;
 import com.springboot.helpdesk.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void insertCustomer(@Valid CustomerDto customerDto) {
         // step 1. prepare the user object
@@ -30,6 +32,8 @@ public class CustomerService {
         user.setPassword(customerDto.password());
         user.setStatus(Status.ACTIVE);
         user.setRole(Role.CUSTOMER);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);
 

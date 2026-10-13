@@ -1,6 +1,7 @@
 package com.springboot.helpdesk.config;
 
 import com.springboot.helpdesk.dto.response.ErrorDto;
+import com.springboot.helpdesk.exception.OwnerShipException;
 import com.springboot.helpdesk.exception.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -65,4 +66,18 @@ public class GlobalExceptionHandler {
                 .body(map);
     }
 
+
+    @ExceptionHandler(OwnerShipException.class)
+    public ResponseEntity<ErrorDto> handleOwnerShipException(OwnerShipException e){
+        return  ResponseEntity
+                .badRequest()
+                .body(new ErrorDto(
+                        e.getMessage(),
+                        "Logged-in User can't perform this operation",
+                        Instant.now()
+                ));
+    }
+
+
 }
+

@@ -7,6 +7,7 @@ import com.springboot.helpdesk.dto.response.TicketRespDto;
 import com.springboot.helpdesk.dto.response.TicketStatusCustomerCountDto;
 import com.springboot.helpdesk.enums.Priority;
 import com.springboot.helpdesk.enums.TicketStatus;
+import com.springboot.helpdesk.exception.OwnerShipException;
 import com.springboot.helpdesk.exception.ResourceNotFoundException;
 import com.springboot.helpdesk.mapper.TicketMapper;
 import com.springboot.helpdesk.model.Customer;
@@ -21,7 +22,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.Subject;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -34,11 +34,9 @@ public class TicketService {
     private final CustomerRepository customerRepository;
     private final ExecutiveRepository executiveRepository;
 
-    public void add(Long customerId, @Valid TicketDto ticketDto) {
+    public void add(String customerUserName, @Valid TicketDto ticketDto) {
         // step 1. prepare the customer
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(()-> new ResourceNotFoundException("Invalid Customer Id .. Customer Not Found"));
-
+        Customer customer = customerRepository.getCustomerByUserName(customerUserName);
         // step 2. map dto to entity
         Ticket ticket = TicketMapper.convertDtoToEntity(ticketDto);
 
@@ -50,7 +48,7 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
-    public void assignExecutive(Long ticketId, Long executiveId) {
+    public void assignExecutive(Long ticketId, Long executiveId, String managerUserName) {
         // step 1. get the ticket from id
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(()-> new ResourceNotFoundException("Invalid Ticket ID"));
@@ -59,6 +57,9 @@ public class TicketService {
         Executive executive = executiveRepository.findById(executiveId)
                 .orElseThrow(()-> new ResourceNotFoundException("Executive Id not found"));
 
+        if(!(executive.getManager().getUser().getUsername().equals(managerUserName))){
+            throw new OwnerShipException("Operation Not Allowed! .. Contact Admin");
+        }
         // step 3. assign the ticket with executive
         ticket.setExecutive(executive);
 
