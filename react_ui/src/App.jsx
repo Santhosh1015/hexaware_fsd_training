@@ -1,15 +1,36 @@
+import { Auth } from "./components/Auth"
+import { NavBar } from "./components/NavBar"
+import Nums from "./components/Nums"
+import { Todo } from "./components/Todo"
+
 const App = () => {
-  const nums = [1,2,3,4,5,6]
-  return(
+  return (
     <div>
-      <h1>My react App</h1>
-      <p>The full Nums array : {nums}</p>
-      <hr />
-      {nums.map((n, index)=>(
-        <li key={index}>{n}</li>
-      ))}
+      <div className="row">
+        <div className="col-md-11">
+<NavBar />
+        </div>
+        <div className="col-md-1">
+          <Auth/>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-4">
+            <Nums/>
+        </div>
+        <div className="col-md-8">
+          <Todo/>
+        </div>
+      </div>
+      <div className="row">
+
+      </div>
+      <div className="row">
+
+      </div>
+
     </div>
   )
 }
-  
+
 export default App
