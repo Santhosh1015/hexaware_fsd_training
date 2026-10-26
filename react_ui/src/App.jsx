@@ -1,3 +1,4 @@
+import { AddTicket } from "./components/AddTicket"
 import { Auth } from "./components/Auth"
 import { NavBar } from "./components/NavBar"
 import Nums from "./components/Nums"
@@ -8,22 +9,25 @@ const App = () => {
     <div>
       <div className="row">
         <div className="col-md-11">
-<NavBar />
+          <NavBar />
         </div>
         <div className="col-md-1">
-          <Auth/>
+          <Auth />
         </div>
       </div>
       <div className="row">
         <div className="col-md-4">
-            <Nums/>
+          <Nums />
         </div>
         <div className="col-md-8">
-          <Todo/>
+          <Todo />
         </div>
       </div>
       <div className="row">
+        <div className="col-md-4">
+          <AddTicket/>
 
+        </div>
       </div>
       <div className="row">
 
