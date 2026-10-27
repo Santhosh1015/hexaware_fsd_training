@@ -17,7 +17,7 @@ export const AddTicket = () => {
     }
 
     return (
-        <div>
+        <div className="card">
             <div className="card-header">
                 Ticket Creation Form
             </div>

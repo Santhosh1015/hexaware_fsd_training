@@ -1,8 +1,10 @@
 import { AddTicket } from "./components/AddTicket"
 import { Auth } from "./components/Auth"
+import CoursesList from "./components/CoursesList"
 import { NavBar } from "./components/NavBar"
 import Nums from "./components/Nums"
 import { Todo } from "./components/Todo"
+
 
 const App = () => {
   return (
@@ -20,7 +22,9 @@ const App = () => {
           <Nums />
         </div>
         <div className="col-md-8">
-          <Todo />
+          {/* <Todo /> */}
+          &nbsp;
+          <CoursesList/>
         </div>
       </div>
       <div className="row">
