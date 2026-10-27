@@ -4,17 +4,48 @@ function CoursesList() {
 
     // use spread ops to clone the courses data
     //
+    const [id, setId] = useState("")
     const [name, setName] = useState("")
     const [fee, setFee] = useState("")
     const [instructorName, setInstructorName] = useState("")
     const [category, setCategory] = useState("")
     const [courses, setCourses] = useState([...courseData])
+    const [onAdd, setOnAdd] = useState(false)
 
     const onDelete = (courseId) => {
         setCourses([...courses.filter((c) => c.id !== courseId)])
     }
 
+    // setting the value in the react context
+    const onEdit = (c) => {
+        setId(c.id)
+        setName(c.name)
+        setFee(c.fee)
+        setCategory(c.category)
+        setInstructorName(c.instructorName)
+        setOnAdd(false)
+
+    }
+    const editCourse = () => {
+
+        let temp = [...courses]
+
+        // since i have set the id on ONEDIT id become the current one
+        temp = temp.filter(c => c.id !== id)
+
+        const newObj = {
+            'id': id,
+            'name': name,
+            'fee': fee,
+            'instructorName': instructorName,
+            'category': category
+        }
+
+        setCourses([newObj, ...temp])
+
+    }
     const addCourse = () => {
+
         let courseObj = {
             'id': Math.ceil((Math.random() * 10000)),
             'name': name,
@@ -25,17 +56,22 @@ function CoursesList() {
         console.log(courseObj)
         setCourses([courseObj, ...courses])
 
-        setName("")
-        setFee(0)
-        setInstructorName("")
-        setCategory("")
-
     }
     return (
         <div className="card">
 
             <div className="card-header">
-                <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >Add Course</button>
+                <button className="btn btn-primary"
+                    onClick={() => {
+                        setOnAdd(true)
+                        setName("")
+                        setFee(0)
+                        setInstructorName("")
+                        setCategory("")
+                    }}
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop" >
+                    Add Course</button>
 
             </div>
             <div className="card-body">
@@ -71,7 +107,13 @@ function CoursesList() {
                                             <i className="bi bi-trash3" onClick={() => onDelete(c.id)}></i>
                                         </a>
                                     </td>
-                                    <td><i className="bi bi-pencil-square" ></i></td>
+                                    <td>
+                                        <a href="javascript:void(0)"
+                                            onClick={(e) => e.preventDefault()}
+                                            style={{ textDecoration: 'none', color: 'inherit' }}><i className="bi bi-pencil-square" onClick={() => onEdit(c)}
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop" ></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             ))
                         }
@@ -114,7 +156,14 @@ function CoursesList() {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={() => addCourse()} data-bs-dismiss="modal">Add</button>
+                            {
+                                onAdd ?
+                                    <button type="button" className="btn btn-primary" onClick={() => addCourse()} data-bs-dismiss="modal">Add</button>
+                                    :
+                                    <button type="button" className="btn btn-primary" onClick={() => editCourse()} data-bs-dismiss="modal">Edit</button>
+                            }
+
+
                         </div>
                     </div>
                 </div>
