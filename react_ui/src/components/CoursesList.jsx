@@ -60,8 +60,11 @@ function CoursesList() {
     return (
         <div className="card">
 
-            <div className="card-header">
-                <button className="btn btn-primary"
+            <div className="card-header d-flex justify-content-between">
+                <div className="card-title">
+                    <h4>Courses List</h4>
+                </div>
+                <button className="btn btn-outline-primary"
                     onClick={() => {
                         setOnAdd(true)
                         setName("")
@@ -75,9 +78,7 @@ function CoursesList() {
 
             </div>
             <div className="card-body">
-                <div className="card-title">
-                    <h4>Courses List</h4>
-                </div>
+                
                 <table className="table table-striped">
                     <thead className="table-dark">
                         <tr>
@@ -127,7 +128,12 @@ function CoursesList() {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Add Course</h1>
+                            {
+                                onAdd?
+                                <h1 className="modal-title fs-5" id="staticBackdropLabel">Add Course</h1>
+                                :
+                                <h1 className="modal-title fs-5" id="staticBackdropLabel">Edit Course</h1>
+                            }
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
