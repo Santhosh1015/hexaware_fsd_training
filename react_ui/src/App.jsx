@@ -7,7 +7,7 @@ import { NavBar } from "./components/NavBar"
 
 const App = () => {
   return (
-    <div className="container-flex">
+    <div className="container-fluid">
       <div className="row">
         <div className="col-lg-12">
           <NavBar />
@@ -26,6 +26,7 @@ const App = () => {
         </div>
 
       </div>
+       
 
     </div>
 

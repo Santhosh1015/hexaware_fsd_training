@@ -6,7 +6,7 @@ export const NavBar = () => {
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-body-tertiary">
                 
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="">Navbar</Link>
+                    <Link className="navbar-brand" to="">Help Desk</Link>
                     
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav">
